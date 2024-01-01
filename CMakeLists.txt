@@ -10,9 +10,9 @@ add_definitions(-DD14LIB_PATH=L"${PROJECT_SOURCE_DIR}/d14uikit/lib/")
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:D14UIKit.dll")
 
-include_directories(d14uikit/include)
 link_directories(d14uikit/lib)
-aux_source_directory(src SRC_LIST)
+include_directories(d14uikit/include)
 
+aux_source_directory(src SRC_LIST)
 add_executable(ImageProcessor ${SRC_LIST})
 target_link_libraries(ImageProcessor D14UIKit)
