@@ -15,13 +15,15 @@ using namespace d14uikit;
 
 FileMenu::FileMenu()
 {
-    setSize({ 200, 107 });
+    setSize({ 300, 107 });
     setBkgnTriggerPanel(true);
 
     auto openBmpCmd = makeUIObject<MenuItem>(L"openBmpCmd");
     openBmpCmd->setHeight(32);
     openBmpCmd->setText(m_openBmpStr);
     openBmpCmd->setFont(Font(L"默认/正常/14"));
+    openBmpCmd->setHotkeyText(L"Ctrl+O");
+    openBmpCmd->setFontHotkey(Font(L"默认/正常/14"));
 
     auto sep1 = makeUIObject<MenuSeparator>(L"fileMenuSep1");
 
@@ -29,12 +31,16 @@ FileMenu::FileMenu()
     saveBmpCmd->setHeight(32);
     saveBmpCmd->setText(m_saveBmpStr);
     saveBmpCmd->setFont(Font(L"默认/正常/14"));
+    saveBmpCmd->setHotkeyText(L"Ctrl+S");
+    saveBmpCmd->setFontHotkey(Font(L"默认/正常/14"));
     saveBmpCmd->setEnabled(false);
 
     auto saveBmpToCmd = makeUIObject<MenuItem>(L"saveBmpToCmd");
     saveBmpToCmd->setHeight(32);
     saveBmpToCmd->setText(m_saveBmpToStr);
     saveBmpToCmd->setFont(Font(L"默认/正常/14"));
+    saveBmpToCmd->setHotkeyText(L"Ctrl+Shift+S");
+    saveBmpToCmd->setFontHotkey(Font(L"默认/正常/14"));
     saveBmpToCmd->setEnabled(false);
 
     appendItem
@@ -83,51 +89,71 @@ std::wstring_view FileMenu::titleName() const
 
 void FileMenu::onTriggerMenuItem(const std::wstring& text)
 {
+    if (text == m_openBmpStr)
+    {
+        triggerOpenBmpCmd();
+    }
+    else if (text == m_saveBmpStr)
+    {
+        triggerSaveBmpCmd();
+    }
+    else if (text == m_saveBmpToStr)
+    {
+        triggerSaveBmpToCmd();
+    }
+}
+
+void FileMenu::triggerOpenBmpCmd()
+{
     auto imgArea = getUIObject<ImageArea>(L"imgArea");
     auto bmpPathLbl = getUIObject<LabelArea>(L"bmpPathLbl");
 
-    if (text == m_openBmpStr)
+    m_ofn.hwndOwner = m_hwnd;
+    m_ofn.lpstrFile = m_fileName;
+    m_ofn.lpstrFileTitle = m_titleName;
+    m_ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
+
+    if (GetOpenFileName(&m_ofn))
+    {
+        imgArea->removeAllBmps();
+        imgArea->setRatio(1.0);
+        auto bmp = load_bmp(m_fileName);
+        imgArea->addBmp(L"原始图像", bmp);
+        bmpPathLbl->setText(m_fileName);
+
+        auto saveBmpCmd = getUIObject(L"saveBmpCmd");
+        auto saveBmpToCmd = getUIObject(L"saveBmpToCmd");
+        saveBmpCmd->setEnabled(true);
+        saveBmpToCmd->setEnabled(true);
+    }
+}
+
+void FileMenu::triggerSaveBmpCmd()
+{
+    auto imgArea = getUIObject<ImageArea>(L"imgArea");
+
+    if (imgArea->currBmp().data != nullptr)
+    {
+        save_bmp(m_fileName, imgArea->currBmp());
+    }
+}
+
+void FileMenu::triggerSaveBmpToCmd()
+{
+    auto imgArea = getUIObject<ImageArea>(L"imgArea");
+    auto bmpPathLbl = getUIObject<LabelArea>(L"bmpPathLbl");
+
+    if (imgArea->currBmp().data != nullptr)
     {
         m_ofn.hwndOwner = m_hwnd;
         m_ofn.lpstrFile = m_fileName;
         m_ofn.lpstrFileTitle = m_titleName;
-        m_ofn.Flags = OFN_HIDEREADONLY | OFN_CREATEPROMPT;
+        m_ofn.Flags = OFN_OVERWRITEPROMPT;
 
-        if (GetOpenFileName(&m_ofn))
-        {
-            imgArea->removeAllBmps();
-            imgArea->setRatio(1.0);
-            auto bmp = load_bmp(m_fileName);
-            imgArea->addBmp(L"原始图像", bmp);
-            bmpPathLbl->setText(m_fileName);
-
-            auto saveBmpCmd = getUIObject(L"saveBmpCmd");
-            auto saveBmpToCmd = getUIObject(L"saveBmpToCmd");
-            saveBmpCmd->setEnabled(true);
-            saveBmpToCmd->setEnabled(true);
-        }
-    }
-    else if (text == m_saveBmpStr)
-    {
-        if (imgArea->currBmp().data != nullptr)
+        if (GetSaveFileName(&m_ofn))
         {
             save_bmp(m_fileName, imgArea->currBmp());
-        }
-    }
-    else if (text == m_saveBmpToStr)
-    {
-        if (imgArea->currBmp().data != nullptr)
-        {
-            m_ofn.hwndOwner = m_hwnd;
-            m_ofn.lpstrFile = m_fileName;
-            m_ofn.lpstrFileTitle = m_titleName;
-            m_ofn.Flags = OFN_OVERWRITEPROMPT;
-
-            if (GetSaveFileName(&m_ofn))
-            {
-                save_bmp(m_fileName, imgArea->currBmp());
-                bmpPathLbl->setText(m_fileName);
-            }
+            bmpPathLbl->setText(m_fileName);
         }
     }
 }

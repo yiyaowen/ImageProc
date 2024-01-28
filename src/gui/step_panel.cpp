@@ -34,7 +34,7 @@ StepPanel::StepPanel()
     geoInfo.Bottom.ToTop = 60;
     lay->addElement(undoBtn.get(), geoInfo);
     undoBtn->setRoundRadius(5);
-    undoBtn->setText(L"撤销当前操作");
+    undoBtn->setText(L"撤销当前操作 (Ctrl+Z)");
     undoBtn->setFont(Font(L"默认/正常/14"));
 
     undoBtn->D14_onMouseButtonRelease(p, e)

@@ -1,6 +1,12 @@
+#include "file_menu.h"
 #include "gui_defs.h"
+#include "image_area.h"
 
 #include <sstream>
+
+#include <Callback.h>
+
+using namespace d14uikit;
 
 UIObjectMap g_uiobjs = {};
 

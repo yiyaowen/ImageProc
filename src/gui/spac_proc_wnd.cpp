@@ -149,7 +149,7 @@ SpacProcWnd::SpacProcWnd()
     diffOpLbl->setSize({ 80, 30 });
     diffOpLbl->setPosition({ 20, 120 });
     diffOpLbl->setText(L"微分算子");
-    diffOpLbl->setFont(Font(L"默认/正常/11"));
+    diffOpLbl->setFont(Font(L"默认/正常/12"));
     diffOpLbl->setHorzAlign(Label::HCenter);
 
 #define CREATE_DIFF_BTN(t, x) \

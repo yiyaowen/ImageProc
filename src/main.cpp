@@ -1,7 +1,9 @@
 #include "gui/gui_defs.h"
+#include "gui/hotkey_hub.h"
 #include "gui/workspace.h"
 
 #include <Application.h>
+#include <Callback.h>
 #include <MainWindow.h>
 
 using namespace d14uikit;
@@ -27,6 +29,8 @@ int main()
 
     auto wkspace = makeUIObject<Workspace>(L"wkspace");
     mwnd->setContent(wkspace.get());
+
+    auto hkhub = makeUIObject<HotkeyHub>(L"hkhub");
 
     return app.run();
 }

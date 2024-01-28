@@ -3,6 +3,7 @@ extern "C"
 #include "../dip/dip_funcs.h"
 }
 #include "gui_defs.h"
+#include "histogram_wnd.h"
 #include "image_area.h"
 #include "step_panel.h"
 #include "util_menu.h"
@@ -215,12 +216,18 @@ void ImageArea::addBmp(const std::wstring& opStr, Bitmap bmp)
 
     auto stepPanel = getUIObject<StepPanel>(L"stepPanel");
     stepPanel->addStep(m_currBmpName);
+
+    auto histogramWnd = getUIObject<HistogramWnd>(L"histogramWnd");
+    histogramWnd->updateBarChart();
 }
 
 void ImageArea::selectBmp(const std::wstring& name)
 {
     m_currBmpName = name;
     setRatio(1.0);
+
+    auto histogramWnd = getUIObject<HistogramWnd>(L"histogramWnd");
+    histogramWnd->updateBarChart();
 }
 
 void ImageArea::updateImgView()

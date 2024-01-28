@@ -29,4 +29,9 @@ public:
 
 protected:
     void onTriggerMenuItem(const std::wstring& text) override;
+
+public:
+    void triggerOpenBmpCmd();
+    void triggerSaveBmpCmd();
+    void triggerSaveBmpToCmd();
 };
