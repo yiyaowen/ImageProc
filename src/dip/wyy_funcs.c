@@ -1,5 +1,6 @@
 #include "dip_funcs.h"
 
+#include <float.h>
 #include <math.h>
 #include <stdio.h>
 
@@ -1122,19 +1123,128 @@ Spectrum idft(Spectrum src)
 // 作者：文亦尧
 Spectrum fft(Spectrum src)
 {
+    UINT e2_w = myGetRadix2(src.w);
+    UINT e2_h = myGetRadix2(src.h);
+    UINT w = (1 << e2_w), h = (1 << e2_h);
+
     Spectrum dst;
-    dst.w = src.w;
-    dst.h = src.h;
-    dst.data = (Complex*)mycpFFT2((MyComplex*)src.data,
-        src.w, myGetRadix2(src.w), src.h, myGetRadix2(src.h));
+    dst.w = w;
+    dst.h = h;
+    if (w != src.w || h != src.h)
+    {
+        Spectrum tmp;
+        tmp.w = w;
+        tmp.h = h;
+        tmp.data = (Complex*)malloc(sizeof(Complex) * w * h);
+        memset(tmp.data, 0, sizeof(Complex) * w * h);
+        for (int r = 0; r < src.h; ++r)
+        {
+            for (int c = 0; c < src.w; ++c)
+            {
+                tmp.data[c + r * tmp.w] = src.data[c + r * src.w];
+            }
+        }
+        dst.data = (Complex*)mycpFFT2((MyComplex*)tmp.data, w, e2_w, h, e2_h);
+    }
+    else // already radix 2
+    {
+        dst.data = (Complex*)mycpFFT2((MyComplex*)src.data, w, e2_w, h, e2_h);
+    }
     return dst;
 }
 Spectrum ifft(Spectrum src)
 {
+    UINT e2_w = myGetRadix2(src.w);
+    UINT e2_h = myGetRadix2(src.h);
+    UINT w = (1 << e2_w), h = (1 << e2_h);
+
     Spectrum dst;
-    dst.w = src.w;
-    dst.h = src.h;
-    dst.data = (Complex*)mycpIFFT2((MyComplex*)src.data,
-        src.w, myGetRadix2(src.w), src.h, myGetRadix2(src.h));
+    dst.w = w;
+    dst.h = h;
+    if (w != src.w || h != src.h)
+    {
+        Spectrum tmp;
+        tmp.w = w;
+        tmp.h = h;
+        tmp.data = (Complex*)malloc(sizeof(Complex) * w * h);
+        memset(tmp.data, 0, sizeof(Complex) * w * h);
+        for (int r = 0; r < src.h; ++r)
+        {
+            for (int c = 0; c < src.w; ++c)
+            {
+                tmp.data[c + r * tmp.w] = src.data[c + r * src.w];
+            }
+        }
+        dst.data = (Complex*)mycpIFFT2((MyComplex*)tmp.data, w, e2_w, h, e2_h);
+    }
+    else // already radix 2
+    {
+        dst.data = (Complex*)mycpIFFT2((MyComplex*)src.data, w, e2_w, h, e2_h);
+    }
     return dst;
+}
+
+// 提取频谱的辅助函数
+typedef long double(*func_t)(MyComplex*);
+Bitmap fft_view(Bitmap src, func_t func)
+{
+    // 转换为频谱（顺便搬移至中心）
+    Spectrum spec = real2comp(src);
+    Spectrum fspec = fft(fshift(spec));
+    // 计算功率谱（顺便对数归一化）
+    long double min = LDBL_MAX, max = LDBL_MIN;
+    for (int i = 0; i < fspec.w; ++i)
+    {
+        for (int j = 0; j < fspec.h; ++j)
+        {
+            Complex* c = &fspec.data[i * fspec.h + j];
+            c->real = func((MyComplex*)c);
+            c->imag = 0;
+
+            if (c->real < min) min = c->real;
+            if (c->real > max) max = c->real;
+        }
+    }
+    // 先对数变换
+    long double log_min = LDBL_MAX, log_max = LDBL_MIN;
+    for (int i = 0; i < fspec.w; ++i)
+    {
+        for (int j = 0; j < fspec.h; ++j)
+        {
+            Complex* c = &fspec.data[i * fspec.h + j];
+            c->real = log(1 + (c->real - min));
+
+            if (c->real < log_min) log_min = c->real;
+            if (c->real > log_max) log_max = c->real;
+        }
+    }
+    // 再线性变换
+    for (int i = 0; i < fspec.w; ++i)
+    {
+        for (int j = 0; j < fspec.h; ++j)
+        {
+            Complex* c = &fspec.data[i * fspec.h + j];
+            c->real = 255 * (c->real - log_min) / (log_max - log_min);
+        }
+    }
+    // 转换为位图
+    Bitmap dst = comp2real(fspec);
+    // 清理中间变量
+    free(spec.data);
+    free(fspec.data);
+    return dst;
+}
+
+// 傅里叶变换提取功率谱
+// 作者：文亦尧
+Bitmap fft_power(Bitmap src)
+{
+    return fft_view(src, mycpMagnitude2);
+}
+
+// 傅里叶变换提取相位谱
+// 作者：文亦尧
+Bitmap fft_phase(Bitmap src)
+{
+    return fft_view(src, mycpPhase);
 }

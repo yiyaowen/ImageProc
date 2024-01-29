@@ -1,8 +1,13 @@
+extern "C"
+{
+#include "../dip/dip_funcs.h"
+}
 #include "gui_defs.h"
 #include "histogram_wnd.h"
 #include "image_area.h"
 
 #include <Application.h>
+#include <Callback.h>
 #include <FilledButton.h>
 #include <Label.h>
 
@@ -39,6 +44,20 @@ HistogramWnd::HistogramWnd()
     histEqBtn->setRoundRadius(5);
     histEqBtn->setText(L"直方图均衡化");
     histEqBtn->setFont(Font(L"默认/正常/14"));
+
+    histEqBtn->D14_onMouseButtonRelease(p, e)
+    {
+        if (e->left())
+        {
+            auto imgArea = getUIObject<ImageArea>(L"imgArea");
+            auto src = imgArea->currBmp();
+            if (src.data != nullptr)
+            {
+                // auto dst = hist_eq(src);
+                // imgArea->addBmp(L"直方图均衡化", dst);
+            }
+        }
+    };
 
 #define CREATE_HIST_LBL(tick, halign) \
     auto histTickLbl_##tick = makeUIObject<Label>(L"histTickLbl_" L#tick); \

@@ -158,10 +158,12 @@ void ImageArea::updateScaledBmp()
     }
     auto w0 = min(bmp.raw.w, bmp.scaled.w);
     auto h0 = min(bmp.raw.h, bmp.scaled.h);
-    for (int i = 0; i < w0; ++i)
-    for (int j = 0; j < h0; ++j)
+    for (int r = 0; r < h0; ++r)
     {
-        bmp.scaled.data[i * bmp.scaled.h + j] = bmp.raw.data[i * bmp.raw.h + j];
+        for (int c = 0; c < w0; ++c)
+        {
+            bmp.scaled.data[r * bmp.scaled.w + c] = bmp.raw.data[r * bmp.raw.w + c];
+        }
     }
     //---------------------------------------------------------------
     updateImgView();

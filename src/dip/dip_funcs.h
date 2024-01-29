@@ -84,23 +84,23 @@ Bitmap cubic_interp(Bitmap src, double ratio);
 //=================================================================================================
 
 // 线性变换
-// 作者：
+// 作者：宋家兴
 Bitmap lin_trans(Bitmap src, double a, double b, double c, double d);
 
 // 对数变换
-// 作者：
+// 作者：宋家兴
 Bitmap log_trans(Bitmap src, double c);
 
 // 指数变换
-// 作者：
+// 作者：宋家兴
 Bitmap exp_trans(Bitmap src, double c, double gamma);
 
 // 直方图均衡化
-// 作者：
+// 作者：宋子晨
 Bitmap hist_eq(Bitmap src);
 
 // 各种平滑处理
-// 作者：
+// 作者：宋子晨
 //
 // 如果涉及到卷积核：
 // 核大小 = 2 * c + 1
@@ -117,7 +117,7 @@ Bitmap max_filt(Bitmap src, int c);
 Bitmap mean_filt(Bitmap src, int c);
 
 // 各种锐化处理
-// 作者：
+// 作者：宋家兴
 //
 // 如果涉及到卷积核：
 // 核大小 = 2 * c + 1
@@ -180,18 +180,20 @@ Spectrum idft(Spectrum src);
 Spectrum fft(Spectrum src);
 Spectrum ifft(Spectrum src);
 
-// 离散余弦变换
-// 作者：
-// Spectrum dct(Spectrum src);
-// Spectrum idct(Spectrum src);
+// 傅里叶变换提取功率谱
+// 作者：文亦尧
+Bitmap fft_power(Bitmap src);
 
-// 快速离散余弦变换
-// 作者：
-// Spectrum fdct(Spectrum src);
-// Spectrum ifdct(Spectrum src);
+// 傅里叶变换提取相位谱
+// 作者：文亦尧
+Bitmap fft_phase(Bitmap src);
+
+// 可视化离散余弦变换
+// 作者：李梦达
+Bitmap dct_view(Bitmap src);
 
 // 各种低通滤波
-// 作者：
+// 作者：李梦达、文亦尧
 //
 // 如果涉及到卷积核：
 // 核大小 = 2 * c + 1
@@ -203,9 +205,11 @@ Spectrum ifft(Spectrum src);
 
 // 例如：理想低通滤波等（待补充）
 Bitmap ideal_low_pass(Bitmap src, double d0);
+Bitmap butterworth_low_pass(Bitmap src, double d0, double n);
+Bitmap gaussian_low_pass(Bitmap src, double d0);
 
 // 各种高通滤波
-// 作者：
+// 作者：李梦达、文亦尧
 //
 // 如果涉及到卷积核：
 // 核大小 = 2 * c + 1
@@ -217,3 +221,5 @@ Bitmap ideal_low_pass(Bitmap src, double d0);
 
 // 例如：理想高通滤波等（待补充）
 Bitmap ideal_high_pass(Bitmap src, double d0);
+Bitmap butterworth_high_pass(Bitmap src, double d0, double n);
+Bitmap gaussian_high_pass(Bitmap src, double d0);
