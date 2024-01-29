@@ -44,39 +44,39 @@ Bitmap invert(Bitmap src);
 //=================================================================================================
 
 // 水平翻转
-// 作者：
+// 作者：韩奕璇
 Bitmap flip_x(Bitmap src);
 
 // 垂直翻转
-// 作者：
+// 作者：韩奕璇
 Bitmap flip_y(Bitmap src);
 
 // 平移
-// 作者：
+// 作者：韩奕璇
 Bitmap move(Bitmap src, int dx, int dy);
 
-// 剪切
-// 作者：
+// 裁剪
+// 作者：韩奕璇
 Bitmap crop(Bitmap src, int x, int y, int w, int h);
 
 // 旋转
-// 作者：
+// 作者：韩奕璇
 Bitmap rotate(Bitmap src, double theta);
 
-// 缩放
-// 作者：
-Bitmap scale(Bitmap src, double sx, double dy);
+// 拉伸
+// 作者：韩奕璇
+Bitmap scale(Bitmap src, double sx, double sy);
 
 // 最邻近插值
-// 作者：
+// 作者：韩奕璇
 Bitmap nearest_interp(Bitmap src, double ratio);
 
 // 双线性插值
-// 作者：
+// 作者：韩奕璇
 Bitmap bilinear_interp(Bitmap src, double ratio);
 
 // 三次内插值
-// 作者：
+// 作者：韩奕璇
 Bitmap cubic_interp(Bitmap src, double ratio);
 
 //=================================================================================================
@@ -193,7 +193,7 @@ Bitmap fft_phase(Bitmap src);
 Bitmap dct_view(Bitmap src);
 
 // 各种低通滤波
-// 作者：李梦达、文亦尧
+// 作者：李梦达
 //
 // 如果涉及到卷积核：
 // 核大小 = 2 * c + 1
@@ -209,7 +209,7 @@ Bitmap butterworth_low_pass(Bitmap src, double d0, double n);
 Bitmap gaussian_low_pass(Bitmap src, double d0);
 
 // 各种高通滤波
-// 作者：李梦达、文亦尧
+// 作者：李梦达
 //
 // 如果涉及到卷积核：
 // 核大小 = 2 * c + 1

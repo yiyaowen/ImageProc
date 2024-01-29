@@ -530,7 +530,7 @@ void mulMatrix(double *P, double *Q, double *resM, int n)
 }
 
 // 可视化离散余弦变换
-// 作者：李梦达、文亦尧
+// 作者：李梦达
 Bitmap dct_view(Bitmap src)
 {
     dBitmap dbmp = dct(src);
@@ -540,7 +540,7 @@ Bitmap dct_view(Bitmap src)
 }
 
 // 各种低通滤波
-// 作者：李梦达、文亦尧
+// 作者：李梦达
 //
 // 如果涉及到卷积核：
 // 核大小 = 2 * c + 1
@@ -592,7 +592,7 @@ Bitmap gaussian_low_pass(Bitmap src, double d0)
 }
 
 // 各种高通滤波
-// 作者：李梦达、文亦尧
+// 作者：李梦达
 //
 // 如果涉及到卷积核：
 // 核大小 = 2 * c + 1

@@ -10,15 +10,8 @@
 
 #include <Callback.h>
 #include <ConstraintLayout.h>
-#include <FilledButton.h>
+#include <FlatButton.h>
 #include <LabelArea.h>
-#include <ListView.h>
-#include <MenuItem.h>
-#include <MenuSeparator.h>
-#include <Panel.h>
-#include <PopupMenu.h>
-#include <RawTextBox.h>
-#include <TabGroup.h>
 
 using namespace d14uikit;
 
@@ -131,7 +124,7 @@ MenuBar::MenuBar()
     {
         if (e->left())
         {
-            getUIObject<PopupMenu>(L"helpDialog")->setActivated(true);
+            getUIObject<HelpDialog>(L"helpDialog")->setPopup(true);
         }
     };
 

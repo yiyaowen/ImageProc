@@ -53,8 +53,8 @@ HistogramWnd::HistogramWnd()
             auto src = imgArea->currBmp();
             if (src.data != nullptr)
             {
-                // auto dst = hist_eq(src);
-                // imgArea->addBmp(L"直方图均衡化", dst);
+                auto dst = hist_eq(src);
+                imgArea->addBmp(L"直方图均衡化", dst);
             }
         }
     };

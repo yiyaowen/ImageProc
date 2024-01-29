@@ -194,8 +194,8 @@ SpacProcWnd::SpacProcWnd()
                 c = std::min(std::max(c, 1), 8);
                 c = std::min(c, (std::min(src.w, src.h) - 1) / 2);
 
-                // auto dst = mid_filt(src, c);
-                // imgArea->addBmp(L"中值滤波", dst);
+                auto dst = mid_filt(src, c);
+                imgArea->addBmp(L"中值滤波", dst);
             }
         }
     };
@@ -222,8 +222,8 @@ SpacProcWnd::SpacProcWnd()
                 c = std::min(std::max(c, 1), 8);
                 c = std::min(c, (std::min(src.w, src.h) - 1) / 2);
 
-                // auto dst = mean_filt(src, c);
-                // imgArea->addBmp(L"均值滤波", dst);
+                auto dst = mean_filt(src, c);
+                imgArea->addBmp(L"均值滤波", dst);
             }
         }
     };
@@ -250,8 +250,8 @@ SpacProcWnd::SpacProcWnd()
                 c = std::min(std::max(c, 1), 8);
                 c = std::min(c, (std::min(src.w, src.h) - 1) / 2);
 
-                // auto dst = min_filt(src, c);
-                // imgArea->addBmp(L"最小值滤波", dst);
+                auto dst = min_filt(src, c);
+                imgArea->addBmp(L"最小值滤波", dst);
             }
         }
     };
@@ -278,8 +278,8 @@ SpacProcWnd::SpacProcWnd()
                 c = std::min(std::max(c, 1), 8);
                 c = std::min(c, (std::min(src.w, src.h) - 1) / 2);
 
-                // auto dst = max_filt(src, c);
-                // imgArea->addBmp(L"最大值滤波", dst);
+                auto dst = max_filt(src, c);
+                imgArea->addBmp(L"最大值滤波", dst);
             }
         }
     };

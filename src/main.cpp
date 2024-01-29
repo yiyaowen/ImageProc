@@ -8,6 +8,9 @@
 
 using namespace d14uikit;
 
+#ifndef UNICODE
+#define UNICODE
+#endif
 #include <Windows.h>
 
 int main()
@@ -20,6 +23,9 @@ int main()
     Application app(L"ImageProcessor");
     app.setResizable(true);
     app.setMinSize({ 800, 600 });
+    app.setClearType(true);
+    app.setTextVertSmooth(true);
+    app.setBmpQualityInterp(true);
 
     auto mwnd = makeUIObject<MainWindow>(L"mwnd");
     mwnd->setCaptionHeight(36);

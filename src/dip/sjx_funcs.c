@@ -42,17 +42,35 @@ Bitmap lin_trans(Bitmap src, double a, double b, double c, double d)
 
             Pixel32* p1 = &dst.data[idx];
 
+            // 增加 RGB 分量 by 文亦尧
             if(p1->R < a && p1->R >= 0){
-                p1->R = p1->G = p1->B = (unsigned char)(c*p1->R/a);
+                p1->R = (unsigned char)(c*p1->R/a);
             }
-            else if(p1->R >=a && p1->R < b){
-                p1->R = p1->G = p1->B = (unsigned char)((d-c)*(p1->R-a)/(b-a)+c);
+            else if(p1->R >= a && p1->R < b){
+                p1->R = (unsigned char)((d-c)*(p1->R-a)/(b-a)+c);
             }
             else if(p1->R >= b && p1->R <= p1->A){
-                p1->R = p1->G = p1->B = (unsigned char)((255-d)*(p1->R-b)/(255-b)+d);
+                p1->R = (unsigned char)((255-d)*(p1->R-b)/(255-b)+d);
             }
-            else{
-                p1->R = p1->G = p1->B;
+            // 增加 RGB 分量 by 文亦尧
+            if(p1->G < a && p1->G >= 0){
+                p1->G = (unsigned char)(c*p1->G/a);
+            }
+            else if(p1->G >= a && p1->G < b){
+                p1->G = (unsigned char)((d-c)*(p1->G-a)/(b-a)+c);
+            }
+            else if(p1->G >= b && p1->G <= p1->A){
+                p1->G = (unsigned char)((255-d)*(p1->G-b)/(255-b)+d);
+            }
+            // 增加 RGB 分量 by 文亦尧
+            if(p1->B < a && p1->B >= 0){
+                p1->B = (unsigned char)(c*p1->B/a);
+            }
+            else if(p1->B >= a && p1->B < b){
+                p1->B = (unsigned char)((d-c)*(p1->B-a)/(b-a)+c);
+            }
+            else if(p1->B >= b && p1->B <= p1->A){
+                p1->B = (unsigned char)((255-d)*(p1->B-b)/(255-b)+d);
             }
         }
     }
@@ -77,7 +95,10 @@ Bitmap log_trans(Bitmap src, double c)
 
             Pixel32* p1 = &dst.data[idx];
 
-            p1->R = p1->G = p1->B = (unsigned char)(c*log((1+p1->R)));
+            // 增加 RGB 分量 by 文亦尧
+            p1->R = (unsigned char)(c*log((1+p1->R)));
+            p1->G = (unsigned char)(c*log((1+p1->G)));
+            p1->B = (unsigned char)(c*log((1+p1->B)));
         }
     }
     return dst;
@@ -100,7 +121,10 @@ Bitmap exp_trans(Bitmap src, double c, double gamma)
 
             Pixel32* p1 = &dst.data[idx];
 
-            p1->R = p1->G = p1->B = (unsigned char)(c*pow(p1->R,gamma));
+            // 增加 RGB 分量 by 文亦尧
+            p1->R = (unsigned char)(c*pow(p1->R,gamma));
+            p1->G = (unsigned char)(c*pow(p1->G,gamma));
+            p1->B = (unsigned char)(c*pow(p1->B,gamma));
         }
     }
     return dst;
@@ -116,7 +140,8 @@ Bitmap roberts(Bitmap src)
     dst.data = (Pixel32*)malloc(sizeof(Pixel32) * dst.w * dst.h);
     memcpy(dst.data, src.data, sizeof(Pixel32) * dst.w * dst.h);
 
-    int temp;
+    // 增加 RGB 分量 by 文亦尧
+    int tempR, tempG, tempB;
     int ia,ja;
     int im,jm;
 
@@ -148,8 +173,14 @@ Bitmap roberts(Bitmap src)
             int idx9 = ia * dst.w + ja;
             Pixel32* p9 = &dst.data[idx9];
 
-            temp = (int)(0.5*abs(p9->R - p5->R)+0.5*abs(p8->R - p6->R));
-            p1->R = p1->G = p1->B = (unsigned char)temp;
+            // 增加 RGB 分量 by 文亦尧
+            tempR = (int)(0.5*abs(p9->R - p5->R)+0.5*abs(p8->R - p6->R));
+            tempG = (int)(0.5*abs(p9->G - p5->G)+0.5*abs(p8->G - p6->G));
+            tempB = (int)(0.5*abs(p9->B - p5->B)+0.5*abs(p8->B - p6->B));
+
+            p1->R = (unsigned char)tempR;
+            p1->G = (unsigned char)tempG;
+            p1->B = (unsigned char)tempB;
         }
     }
     return dst;
@@ -164,7 +195,8 @@ Bitmap prewitt(Bitmap src)
     dst.data = (Pixel32*)malloc(sizeof(Pixel32) * dst.w * dst.h);
     memcpy(dst.data, src.data, sizeof(Pixel32) * dst.w * dst.h);
 
-    int temp;
+    // 增加 RGB 分量 by 文亦尧
+    int tempR, tempG, tempB;
     int ia,ja,im,jm;
 
     for (int i = 0; i < dst.h; ++i)
@@ -195,9 +227,14 @@ Bitmap prewitt(Bitmap src)
             int idx9 = ia * dst.w + ja;
             Pixel32* p9 = &dst.data[idx9];
 
-            temp = (int)(0.5*abs(p3->R + p6->R + p9->R- p1->R - p4->R - p7->R)+0.5*abs(p7->R + p8->R + p9->R- p1->R - p2->R - p3->R));
+            // 增加 RGB 分量 by 文亦尧
+            tempR = (int)(0.5*abs(p3->R + p6->R + p9->R- p1->R - p4->R - p7->R)+0.5*abs(p7->R + p8->R + p9->R- p1->R - p2->R - p3->R));
+            tempG = (int)(0.5*abs(p3->G + p6->G + p9->G- p1->G - p4->G - p7->G)+0.5*abs(p7->G + p8->G + p9->G- p1->G - p2->G - p3->G));
+            tempB = (int)(0.5*abs(p3->B + p6->B + p9->B- p1->B - p4->B - p7->B)+0.5*abs(p7->B + p8->B + p9->B- p1->B - p2->B - p3->B));
 
-            p1->R = p1->G = p1->B = (unsigned char)temp;
+            p1->R = (unsigned char)tempR;
+            p1->G = (unsigned char)tempG;
+            p1->B = (unsigned char)tempB;
         }
     }
     return dst;
@@ -212,7 +249,8 @@ Bitmap sobel(Bitmap src)
     dst.data = (Pixel32*)malloc(sizeof(Pixel32) * dst.w * dst.h);
     memcpy(dst.data, src.data, sizeof(Pixel32) * dst.w * dst.h);
 
-    int temp;
+    // 增加 RGB 分量 by 文亦尧
+    int tempR, tempG, tempB;
     int ia,ja,im,jm;
 
     for (int i = 0; i < dst.h; ++i)
@@ -247,9 +285,14 @@ Bitmap sobel(Bitmap src)
 //	4 5 6  -2 0 2   0  0  0
 //  7 8 9  -1 0 1   1  2  1
 
-            temp = (int)(0.5*abs(p3->R + 2*p6->R + p9->R- p1->R - 2*p4->R - p7->R)+0.5*abs(p7->R + 2*p8->R + p9->R- p1->R - 2*p2->R - p3->R));
+            // 增加 RGB 分量 by 文亦尧
+            tempR = (int)(0.5*abs(p3->R + 2*p6->R + p9->R- p1->R - 2*p4->R - p7->R)+0.5*abs(p7->R + 2*p8->R + p9->R- p1->R - 2*p2->R - p3->R));
+            tempG = (int)(0.5*abs(p3->G + 2*p6->G + p9->G- p1->G - 2*p4->G - p7->G)+0.5*abs(p7->G + 2*p8->G + p9->G- p1->G - 2*p2->G - p3->G));
+            tempB = (int)(0.5*abs(p3->B + 2*p6->B + p9->B- p1->B - 2*p4->B - p7->B)+0.5*abs(p7->B + 2*p8->B + p9->B- p1->B - 2*p2->B - p3->B));
 
-            p1->R = p1->G = p1->B = (unsigned char)temp;
+            p1->R = (unsigned char)tempR;
+            p1->G = (unsigned char)tempG;
+            p1->B = (unsigned char)tempB;
         }
     }
     return dst;
@@ -264,7 +307,8 @@ Bitmap laplacian(Bitmap src)
     dst.data = (Pixel32*)malloc(sizeof(Pixel32) * dst.w * dst.h);
     memcpy(dst.data, src.data, sizeof(Pixel32) * dst.w * dst.h);
 
-    int temp;
+    // 增加 RGB 分量 by 文亦尧
+    int tempR, tempG, tempB;
     int ia,ja,im,jm;
 
     for (int i = 0; i < dst.h; ++i)
@@ -295,10 +339,14 @@ Bitmap laplacian(Bitmap src)
             int idx9 = ia * dst.w + ja;
             Pixel32* p9 = &dst.data[idx9];
 
-            temp = abs(p2->R + p4->R - 4 *p5->R + p6->R + p8->R);
-            //temp = temp + p1->R;
-            //if (temp < 0)temp = 0;
-            p1->R = p1->G = p1->B = (unsigned char)temp;
+            // 增加 RGB 分量 by 文亦尧
+            tempR = abs(p2->R + p4->R - 4 *p5->R + p6->R + p8->R);
+            tempG = abs(p2->G + p4->G - 4 *p5->G + p6->G + p8->G);
+            tempB = abs(p2->B + p4->B - 4 *p5->B + p6->B + p8->B);
+
+            p1->R = (unsigned char)tempR;
+            p1->G = (unsigned char)tempG;
+            p1->B = (unsigned char)tempB;
         }
     }
     return dst;
