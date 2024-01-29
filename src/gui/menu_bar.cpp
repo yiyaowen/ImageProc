@@ -11,6 +11,7 @@
 #include <Callback.h>
 #include <ConstraintLayout.h>
 #include <FilledButton.h>
+#include <LabelArea.h>
 #include <ListView.h>
 #include <MenuItem.h>
 #include <MenuSeparator.h>
@@ -150,4 +151,15 @@ MenuBar::MenuBar()
             getUIObject<DIPWindow>(L"settingsWnd")->onTrigger();
         }
     };
+
+    auto imgSizeLbl = makeUIObject<LabelArea>(L"imgSizeLbl");
+    GeoInfo geoInfo = {};
+    geoInfo.Left.ToRight = 5;
+    geoInfo.Right.ToRight = 5;
+    geoInfo.Top.ToTop = 5;
+    geoInfo.Bottom.ToBottom = 5;
+    addElement(imgSizeLbl.get(), geoInfo);
+    imgSizeLbl->setText(L"(Width ⨉ Height)");
+    imgSizeLbl->setFont(Font(L"默认/正常/14"));
+    imgSizeLbl->setHorzAlign(Label::Right);
 }

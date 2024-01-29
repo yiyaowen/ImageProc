@@ -216,6 +216,11 @@ void ImageArea::addBmp(const std::wstring& opStr, Bitmap bmp)
 
     updateScaledBmp();
 
+    auto imgSizeLbl = getUIObject<Label>(L"imgSizeLbl");
+    auto wstr = std::to_wstring(bmp.w);
+    auto hstr = std::to_wstring(bmp.h);
+    imgSizeLbl->setText(L"(" + wstr + L" ⨉ " + hstr + L")");
+
     auto stepPanel = getUIObject<StepPanel>(L"stepPanel");
     stepPanel->addStep(m_currBmpName);
 
@@ -227,6 +232,12 @@ void ImageArea::selectBmp(const std::wstring& name)
 {
     m_currBmpName = name;
     setRatio(1.0);
+
+    auto bmp = currBmp();
+    auto imgSizeLbl = getUIObject<Label>(L"imgSizeLbl");
+    auto wstr = std::to_wstring(bmp.w);
+    auto hstr = std::to_wstring(bmp.h);
+    imgSizeLbl->setText(L"(" + wstr + L" ⨉ " + hstr + L")");
 
     auto histogramWnd = getUIObject<HistogramWnd>(L"histogramWnd");
     histogramWnd->updateBarChart();

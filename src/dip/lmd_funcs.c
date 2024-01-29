@@ -257,11 +257,17 @@ dBitmap dct(Bitmap src)
     memset(dst.data, 0, sizeof(dst.data));
     // 正变换中间矩阵
     // 初始矩阵赋值
-    for (int x = 0; x < sw; ++x)
+    // for (int x = 0; x < sw; ++x)
+    // {
+    //     for (int y = 0; y < sh; ++y)
+    //     {
+    //         int idx = x * src.w + y;
+    // 修改 by 文亦尧
+    for (int y = 0; y < sh; ++y)
     {
-        for (int y = 0; y < sh; ++y)
+        for (int x = 0; x < sw; ++x)
         {
-            int idx = x * src.w + y;
+            int idx = y * src.w + x;
             if ((x < w) & (y < h))
             {
                 src_l.data[idx] = (double)(src.data[idx].G) * 1.0;
@@ -337,12 +343,20 @@ Bitmap view(dBitmap src)
     dst.w = w;
     dst.h = h;
     dst.data = (Pixel32 *)malloc(sizeof(Pixel32) * dst.w * dst.h);
-    memset(dst.data, 0, sizeof(dst.data));
-    for (int x = 0; x < w; ++x)
+    // memset(dst.data, 0, sizeof(dst.data));
+    // 修改 by 文亦尧
+    memset(dst.data, 0, sizeof(Pixel32) * dst.w * dst.h);
+    // for (int x = 0; x < w; ++x)
+    // {
+    //     for (int y = 0; y < h; ++y)
+    //     {
+    //         int idx = x * src.w + y;
+    // 修改 by 文亦尧
+    for (int y = 0; y < h; ++y)
     {
-        for (int y = 0; y < h; ++y)
+        for (int x = 0; x < w; ++x)
         {
-            int idx = x * src.w + y;
+            int idx = y * src.w + x;
             double temp = log(src.data[idx]) * 1.0;
             uint8_t tmp = (uint8_t)(temp);
             if (tmp < 0)
