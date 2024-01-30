@@ -70,11 +70,16 @@ Spectrum Ideal_low_pass(Spectrum src, double d0)
     dst.w = w;
     dst.h = h;
     dst.data = (Complex *)malloc(sizeof(Complex) * src.w * src.h);
-    for (int x = 0; x < src.w; ++x)
+    // for (int x = 0; x < src.w; ++x)
+    // {
+    //     for (int y = 0; y < src.h; ++y)
+    //     {
+    // 修改 by 文亦尧
+    for (int y = 0; y < src.h; ++y)
     {
-        for (int y = 0; y < src.h; ++y)
+        for (int x = 0; x < src.w; ++x)
         {
-            int idx = x * src.w + y;
+            int idx = y * src.w + x;
             int mx = w / 2; // 256
             int my = h / 2; // 256
             if (ldistance(x, y, mx, my) <= d0)
@@ -104,11 +109,16 @@ Spectrum Butterworth_low_pass(Spectrum src, double d0, double n)
     dst.w = w;
     dst.h = h;
     dst.data = (Complex *)malloc(sizeof(Complex) * src.w * src.h);
-    for (int x = 0; x < src.w; ++x)
+    // for (int x = 0; x < src.w; ++x)
+    // {
+    //     for (int y = 0; y < src.h; ++y)
+    //     {
+    // 修改 by 文亦尧
+    for (int y = 0; y < src.h; ++y)
     {
-        for (int y = 0; y < src.h; ++y)
+        for (int x = 0; x < src.w; ++x)
         {
-            int idx = x * src.w + y;
+            int idx = y * src.w + x;
             int mx = w / 2; // 256
             int my = h / 2; // 256
             double dis = ldistance(x, y, mx, my);
@@ -128,11 +138,16 @@ Spectrum Gaussian_low_pass(Spectrum src, double d0)
     dst.w = w;
     dst.h = h;
     dst.data = (Complex *)malloc(sizeof(Complex) * src.w * src.h);
-    for (int x = 0; x < src.w; ++x)
+    // for (int x = 0; x < src.w; ++x)
+    // {
+    //     for (int y = 0; y < src.h; ++y)
+    //     {
+    // 修改 by 文亦尧
+    for (int y = 0; y < src.h; ++y)
     {
-        for (int y = 0; y < src.h; ++y)
+        for (int x = 0; x < src.w; ++x)
         {
-            int idx = x * src.w + y;
+            int idx = y * src.w + x;
             int mx = w / 2; // 256
             int my = h / 2; // 256
             double dis = ldistance(x, y, mx, my);
@@ -153,11 +168,16 @@ Spectrum Ideal_high_pass(Spectrum src, double d0)
     dst.w = w;
     dst.h = h;
     dst.data = (Complex *)malloc(sizeof(Complex) * src.w * src.h);
-    for (int x = 0; x < src.w; ++x)
+    // for (int x = 0; x < src.w; ++x)
+    // {
+    //     for (int y = 0; y < src.h; ++y)
+    //     {
+    // 修改 by 文亦尧
+    for (int y = 0; y < src.h; ++y)
     {
-        for (int y = 0; y < src.h; ++y)
+        for (int x = 0; x < src.w; ++x)
         {
-            int idx = x * src.w + y;
+            int idx = y * src.w + x;
             int mx = w / 2; // 256
             int my = h / 2; // 256
             if (ldistance(x, y, mx, my) >= d0)
@@ -187,11 +207,16 @@ Spectrum Butterworth_high_pass(Spectrum src, double d0, double n)
     dst.w = w;
     dst.h = h;
     dst.data = (Complex *)malloc(sizeof(Complex) * src.w * src.h);
-    for (int x = 0; x < src.w; ++x)
+    // for (int x = 0; x < src.w; ++x)
+    // {
+    //     for (int y = 0; y < src.h; ++y)
+    //     {
+    // 修改 by 文亦尧
+    for (int y = 0; y < src.h; ++y)
     {
-        for (int y = 0; y < src.h; ++y)
+        for (int x = 0; x < src.w; ++x)
         {
-            int idx = x * src.w + y;
+            int idx = y * src.w + x;
             int mx = w / 2; // 256
             int my = h / 2; // 256
             double dis = ldistance(x, y, mx, my);
@@ -211,11 +236,16 @@ Spectrum Gaussian_high_pass(Spectrum src, double d0)
     dst.w = w;
     dst.h = h;
     dst.data = (Complex *)malloc(sizeof(Complex) * src.w * src.h);
-    for (int x = 0; x < src.w; ++x)
+    // for (int x = 0; x < src.w; ++x)
+    // {
+    //     for (int y = 0; y < src.h; ++y)
+    //     {
+    // 修改 by 文亦尧
+    for (int y = 0; y < src.h; ++y)
     {
-        for (int y = 0; y < src.h; ++y)
+        for (int x = 0; x < src.w; ++x)
         {
-            int idx = x * src.w + y;
+            int idx = y * src.w + x;
             int mx = w / 2; // 256
             int my = h / 2; // 256
             double dis = ldistance(x, y, mx, my);
@@ -274,9 +304,14 @@ dBitmap dct(Bitmap src)
             }
         }
     }
-    for (int bx = 0; bx < bw; ++bx)
+    // for (int bx = 0; bx < bw; ++bx)
+    // {
+    //     for (int by = 0; by < bh; ++by)
+    //     {
+    // 修改 by 文亦尧
+    for (int by = 0; by < bh; ++by)
     {
-        for (int by = 0; by < bh; ++by)
+        for (int bx = 0; bx < bw; ++bx)
         {
             double *f = (double *)malloc(CN * CN * sizeof(double));
             double *A = (double *)malloc(CN * CN * sizeof(double));
@@ -398,20 +433,31 @@ Bitmap idct(dBitmap src)
     dst.h = sh;
     dst.data = (Pixel32 *)malloc(sizeof(Pixel32) * dst.w * dst.h);
     // 初始矩阵赋值
-    for (int x = 0; x < sw; ++x)
+    // for (int x = 0; x < w; ++x)
+    // {
+    //     for (int y = 0; y < h; ++y)
+    //     {
+    //         int idx = x * src.w + y;
+    // 修改 by 文亦尧
+    for (int y = 0; y < h; ++y)
     {
-        for (int y = 0; y < sh; ++y)
+        for (int x = 0; x < w; ++x)
         {
-            int idx = x * src.w + y;
+            int idx = y * src.w + x;
             if ((x < w) & (y < h))
             {
                 src_l.data[idx] = src.data[idx];
             }
         }
     }
-    for (int bx = 0; bx < bw; ++bx)
+    // for (int bx = 0; bx < bw; ++bx)
+    // {
+    //     for (int by = 0; by < bh; ++by)
+    //     {
+    // 修改 by 文亦尧
+    for (int by = 0; by < bh; ++by)
     {
-        for (int by = 0; by < bh; ++by)
+        for (int bx = 0; bx < bw; ++bx)
         {
             double *F = (double *)malloc(CN * CN * sizeof(double));
             double *A = (double *)malloc(CN * CN * sizeof(double));
@@ -539,6 +585,36 @@ Bitmap dct_view(Bitmap src)
     return dst;
 }
 
+// 包装频域滤波函数
+// 作者：文亦尧
+#define RUN_FREQ_FILT(func, ...) \
+    Spectrum spec1 = real2comp(src); \
+    Spectrum fspec1 = fft(fshift(spec1)); \
+    Spectrum fspec2 = func(fspec1, __VA_ARGS__); \
+    Spectrum spec2 = fshift(ifft(fspec2)); \
+    Bitmap dst = comp2real(spec2); \
+    free(spec1.data); \
+    free(fspec1.data); \
+    free(fspec2.data); \
+    free(spec2.data); \
+    if (dst.w != src.w || dst.h != src.h) \
+    { \
+        Bitmap tmp; \
+        tmp.w = src.w; \
+        tmp.h = src.h; \
+        tmp.data = (Pixel32*)malloc(sizeof(Pixel32) * tmp.w * tmp.h); \
+        for (int r = 0; r < tmp.h; ++r) \
+        { \
+            for (int c = 0; c < tmp.w; ++c) \
+            { \
+                tmp.data[r * tmp.w + c] = dst.data[r * dst.w + c]; \
+            } \
+        } \
+        free(dst.data); \
+        dst = tmp; \
+    } \
+    return dst;
+
 // 各种低通滤波
 // 作者：李梦达
 //
@@ -553,42 +629,15 @@ Bitmap dct_view(Bitmap src)
 // 例如：理想低通滤波等（待补充）
 Bitmap ideal_low_pass(Bitmap src, double d0)
 {
-    Spectrum spec1 = real2comp(src);
-    Spectrum fspec1 = fft(fshift(spec1));
-    Spectrum fspec2 = Ideal_low_pass(fspec1, d0);
-    Spectrum spec2 = fshift(ifft(fspec2));
-    Bitmap dst = comp2real(spec2);
-    free(spec1.data);
-    free(fspec1.data);
-    free(fspec2.data);
-    free(spec2.data);
-    return dst;
+    RUN_FREQ_FILT(Ideal_low_pass, d0);
 }
 Bitmap butterworth_low_pass(Bitmap src, double d0, double n)
 {
-    Spectrum spec1 = real2comp(src);
-    Spectrum fspec1 = fft(fshift(spec1));
-    Spectrum fspec2 = Butterworth_low_pass(fspec1, d0, n);
-    Spectrum spec2 = fshift(ifft(fspec2));
-    Bitmap dst = comp2real(spec2);
-    free(spec1.data);
-    free(fspec1.data);
-    free(fspec2.data);
-    free(spec2.data);
-    return dst;
+    RUN_FREQ_FILT(Butterworth_low_pass, d0, n);
 }
 Bitmap gaussian_low_pass(Bitmap src, double d0)
 {
-    Spectrum spec1 = real2comp(src);
-    Spectrum fspec1 = fft(fshift(spec1));
-    Spectrum fspec2 = Gaussian_low_pass(fspec1, d0);
-    Spectrum spec2 = fshift(ifft(fspec2));
-    Bitmap dst = comp2real(spec2);
-    free(spec1.data);
-    free(fspec1.data);
-    free(fspec2.data);
-    free(spec2.data);
-    return dst;
+    RUN_FREQ_FILT(Gaussian_low_pass, d0);
 }
 
 // 各种高通滤波
@@ -605,40 +654,13 @@ Bitmap gaussian_low_pass(Bitmap src, double d0)
 // 例如：理想高通滤波等（待补充）
 Bitmap ideal_high_pass(Bitmap src, double d0)
 {
-    Spectrum spec1 = real2comp(src);
-    Spectrum fspec1 = fft(fshift(spec1));
-    Spectrum fspec2 = Ideal_high_pass(fspec1, d0);
-    Spectrum spec2 = fshift(ifft(fspec2));
-    Bitmap dst = comp2real(spec2);
-    free(spec1.data);
-    free(fspec1.data);
-    free(fspec2.data);
-    free(spec2.data);
-    return dst;
+    RUN_FREQ_FILT(Ideal_high_pass, d0);
 }
 Bitmap butterworth_high_pass(Bitmap src, double d0, double n)
 {
-    Spectrum spec1 = real2comp(src);
-    Spectrum fspec1 = fft(fshift(spec1));
-    Spectrum fspec2 = Butterworth_high_pass(fspec1, d0, n);
-    Spectrum spec2 = fshift(ifft(fspec2));
-    Bitmap dst = comp2real(spec2);
-    free(spec1.data);
-    free(fspec1.data);
-    free(fspec2.data);
-    free(spec2.data);
-    return dst;
+    RUN_FREQ_FILT(Butterworth_high_pass, d0, n);
 }
 Bitmap gaussian_high_pass(Bitmap src, double d0)
 {
-    Spectrum spec1 = real2comp(src);
-    Spectrum fspec1 = fft(fshift(spec1));
-    Spectrum fspec2 = Gaussian_high_pass(fspec1, d0);
-    Spectrum spec2 = fshift(ifft(fspec2));
-    Bitmap dst = comp2real(spec2);
-    free(spec1.data);
-    free(fspec1.data);
-    free(fspec2.data);
-    free(spec2.data);
-    return dst;
+    RUN_FREQ_FILT(Gaussian_high_pass, d0);
 }

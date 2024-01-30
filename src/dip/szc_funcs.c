@@ -73,13 +73,13 @@ Bitmap mid_filt(Bitmap src, int c) {
     int Kernel_length = Kernel_size * Kernel_size;
 
     //给reg赋值
-    for (int i = 0; i <= src.h - 2 * c - 1; i=i+1) {//行
+    for (int i = 0; i <= src.h - 2 * c - 1; i = i + 1) {//行
         for (int j = 0; j <= src.w - 2 * c - 1; j = j + 1) {//列
             int Kernel_reg_R[289] = { 0 }, Kernel_reg_G[289] = { 0 }, Kernel_reg_B[289] = { 0 };
             int idx = i * src.w + j;//定位各个模板的核心位置
             //取模板内像素灰度值
             int flag = 0;
-            for (int ii = i; ii <= i+ 2*c;ii++) {
+            for (int ii = i; ii <= i+ 2*c; ii++) {
                 for (int jj = j; jj <= j+2*c; jj++) {
                     int idxx = ii * src.w + jj;
                     Kernel_reg_R[flag] = src.data[idxx].R;

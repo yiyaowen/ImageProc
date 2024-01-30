@@ -10,6 +10,7 @@ extern "C"
 
 #include <Application.h>
 #include <Callback.h>
+#include <ClickablePanel.h>
 #include <Cursor.h>
 #include <Label.h>
 #include <RawTextBox.h>
@@ -34,7 +35,7 @@ ImageArea::ImageArea()
     hintLbl->setFont(Font(L"默认/正常/14"));
     hintLbl->setHorzAlign(Label::HCenter);
 
-    auto imgBlk = makeUIObject<Panel>(L"imgBlk");
+    auto imgBlk = makeUIObject<ClickablePanel>(L"imgBlk");
 
     imgBlk->D14_onMouseMove(p, e)
     {
@@ -68,7 +69,16 @@ ImageArea::ImageArea()
     auto utilMenu = makeUIObject<UtilMenu>(L"utilMenu");
     imgBlk->D14_onMouseButton(p, e)
     {
-        if (e->leftUp())
+        if (e->rightUp())
+        {
+            auto utilMenu = getUIObject<PopupMenu>(L"utilMenu");
+            utilMenu->setPosition(e->cursorPoint());
+            utilMenu->setActivated(true);
+        }
+    };
+    imgBlk->D14_onMouseButtonRelease(p, e)
+    {
+        if (e->left())
         {
             auto lockLbl = getUIObject<Label>(L"lockLbl");
             auto imgArea = getUIObject<ImageArea>(L"imgArea");
@@ -77,12 +87,6 @@ ImageArea::ImageArea()
                 lockLbl->setText(L"单击释放");
             }
             else lockLbl->setText(L"单击锁定");
-        }
-        else if (e->rightUp())
-        {
-            auto utilMenu = getUIObject<PopupMenu>(L"utilMenu");
-            utilMenu->setPosition(e->cursorPoint());
-            utilMenu->setActivated(true);
         }
     };
 
