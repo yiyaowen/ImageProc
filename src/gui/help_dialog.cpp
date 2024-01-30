@@ -30,6 +30,21 @@ HelpDialog::HelpDialog()
 
     m_bkgn = std::make_shared<Panel>();
     m_bkgn->setGlobal(true);
+    m_bkgn->setOpacity(0.5f);
+
+    m_bkgn->D14_onChangeTheme(p, name)
+    {
+        if (name == L"Light")
+        {
+            p->setColor({ 10, 10, 10 });
+        }
+        else if (name == L"Dark")
+        {
+            p->setColor({ 80, 80, 80 });
+        }
+    };
+    m_bkgn->callback().onChangeTheme(
+        m_bkgn.get(), Application::app()->themeMode());
 
     setPopup(getRegVal());
 
@@ -45,7 +60,7 @@ HelpDialog::HelpDialog()
 
     auto helpView = makeUIObject<ScrollView>(L"helpView");
     helpView->setParent(clntArea.get());
-    helpView->setSize({ 560, 260 });
+    helpView->setSize({ 560, 300 });
     helpView->setPosition({ 20, 70 });
 
     auto helpArea = makeUIObject<ConstraintLayout>(L"helpArea");
@@ -84,12 +99,12 @@ HelpDialog::HelpDialog()
 
     auto ignoreBox = makeUIObject<CheckBox>(L"ignoreBox");
     ignoreBox->setParent(clntArea.get());
-    ignoreBox->setPosition({ 300, 348 });
+    ignoreBox->setPosition({ 300, 388 });
 
     auto ignoreLbl = makeUIObject<Label>(L"ignoreLbl");
     ignoreLbl->setParent(clntArea.get());
     ignoreLbl->setSize({ 0, 40 });
-    ignoreLbl->setPosition({ 334, 340 });
+    ignoreLbl->setPosition({ 334, 380 });
     ignoreLbl->setText(L"打开时自动显示");
     ignoreLbl->setFont(Font(L"默认/正常/14"));
 
@@ -108,7 +123,7 @@ HelpDialog::HelpDialog()
     auto igotitBtn = makeUIObject<FilledButton>(L"igotitBtn");
     igotitBtn->setParent(clntArea.get());
     igotitBtn->setSize({ 80, 40 });
-    igotitBtn->setPosition({ 500, 340 });
+    igotitBtn->setPosition({ 500, 380 });
     igotitBtn->setRoundRadius(5);
     igotitBtn->setText(L"好的");
     igotitBtn->setFont(Font(L"默认/正常/14"));
@@ -185,7 +200,7 @@ void HelpDialog::setPopup(bool value)
     auto app = Application::app();
     if (value)
     {
-        setSize({ 600, 400 });
+        setSize({ 600, 440 });
         auto w = app->width();
         auto h = app->height();
         setPosition

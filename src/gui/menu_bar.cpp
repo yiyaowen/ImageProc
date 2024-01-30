@@ -11,7 +11,7 @@
 #include <Callback.h>
 #include <ConstraintLayout.h>
 #include <FlatButton.h>
-#include <LabelArea.h>
+#include <Label.h>
 
 using namespace d14uikit;
 
@@ -145,7 +145,7 @@ MenuBar::MenuBar()
         }
     };
 
-    auto imgSizeLbl = makeUIObject<LabelArea>(L"imgSizeLbl");
+    auto imgSizeLbl = makeUIObject<Label>(L"imgSizeLbl");
     GeoInfo geoInfo = {};
     geoInfo.Left.ToRight = 5;
     geoInfo.Right.ToRight = 5;
