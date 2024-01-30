@@ -9,7 +9,7 @@ ImageProcessor 是一个基于 [D14UIKit](https://github.com/DreamersGather/D14U
 * 空域处理：线性/对数/指数变换、各种平滑/锐化处理
 * 频域处理：FFT、DCT、各种低通/高通滤波
 
-其中 `src/gui` 中存放有 D14UIKit 库相关的 GUI 设计代码，`src/dip` 中存放有各种数字图像处理算法的具体实现。
+其中 `src/gui` 中存放有 D14UIKit 库相关的 GUI 设计代码，`src/dip` 中存放有各种数字图像处理算法的实现。
 
 ## 构建
 
