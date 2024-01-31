@@ -10,8 +10,8 @@
 
 #include <Callback.h>
 #include <ConstraintLayout.h>
-#include <FlatButton.h>
 #include <Label.h>
+#include <OutlinedButton.h>
 
 using namespace d14uikit;
 
@@ -111,27 +111,10 @@ MenuBar::MenuBar()
         }
     };
 
-    auto helpBtn = makeUIObject<FlatButton>(L"helpBtn");
-    helpBtn->setParent(this);
-    helpBtn->setSize({ 60, 32 });
-    helpBtn->setPosition({ 485, 5 });
-    helpBtn->setRoundRadius(5);
-    helpBtn->setText(L"帮助");
-    helpBtn->setFont(Font(L"默认/正常/14"));
-
-    auto helpDialog = makeUIObject<HelpDialog>(L"helpDialog");
-    helpBtn->D14_onMouseButtonRelease(p, e)
-    {
-        if (e->left())
-        {
-            getUIObject<HelpDialog>(L"helpDialog")->setPopup(true);
-        }
-    };
-
     auto settingsBtn = makeUIObject<FlatButton>(L"settingsBtn");
     settingsBtn->setParent(this);
     settingsBtn->setSize({ 60, 32 });
-    settingsBtn->setPosition({ 545, 5 });
+    settingsBtn->setPosition({ 485, 5 });
     settingsBtn->setRoundRadius(5);
     settingsBtn->setText(L"设置");
     settingsBtn->setFont(Font(L"默认/正常/14"));
@@ -145,6 +128,22 @@ MenuBar::MenuBar()
         }
     };
 
+    auto helpBtn = makeUIObject<OutlinedButton>(L"helpBtn");
+    helpBtn->setParent(this);
+    helpBtn->setSize({ 88, 24 });
+    helpBtn->setPosition({ 555, 9 });
+    helpBtn->setText(L"帮助 & 关于");
+    helpBtn->setFont(Font(L"默认/正常/11"));
+
+    auto helpDialog = makeUIObject<HelpDialog>(L"helpDialog");
+    helpBtn->D14_onMouseButtonRelease(p, e)
+    {
+        if (e->left())
+        {
+            getUIObject<HelpDialog>(L"helpDialog")->setPopup(true);
+        }
+    };
+
     auto imgSizeLbl = makeUIObject<Label>(L"imgSizeLbl");
     GeoInfo geoInfo = {};
     geoInfo.Left.ToRight = 5;
@@ -153,6 +152,6 @@ MenuBar::MenuBar()
     geoInfo.Bottom.ToBottom = 5;
     addElement(imgSizeLbl.get(), geoInfo);
     imgSizeLbl->setText(L"(Width ⨉ Height)");
-    imgSizeLbl->setFont(Font(L"默认/正常/14"));
+    imgSizeLbl->setFont(Font(L"默认/正常/12"));
     imgSizeLbl->setHorzAlign(Label::Right);
 }
