@@ -1,2 +1,5 @@
+*.bmp
+*.dll
+*.exe
 build
 d14uikit

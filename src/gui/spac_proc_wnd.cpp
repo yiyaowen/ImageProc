@@ -191,6 +191,7 @@ SpacProcWnd::SpacProcWnd()
             if (src.data != nullptr)
             {
                 auto c = (int)GET_FILT_BOX(mid, c);
+
                 c = std::min(std::max(c, 1), 8);
                 c = std::min(c, (std::min(src.w, src.h) - 1) / 2);
 
@@ -219,6 +220,7 @@ SpacProcWnd::SpacProcWnd()
             if (src.data != nullptr)
             {
                 auto c = (int)GET_FILT_BOX(mean, c);
+
                 c = std::min(std::max(c, 1), 8);
                 c = std::min(c, (std::min(src.w, src.h) - 1) / 2);
 
@@ -247,6 +249,7 @@ SpacProcWnd::SpacProcWnd()
             if (src.data != nullptr)
             {
                 auto c = (int)GET_FILT_BOX(min, c);
+
                 c = std::min(std::max(c, 1), 8);
                 c = std::min(c, (std::min(src.w, src.h) - 1) / 2);
 
@@ -275,6 +278,7 @@ SpacProcWnd::SpacProcWnd()
             if (src.data != nullptr)
             {
                 auto c = (int)GET_FILT_BOX(max, c);
+
                 c = std::min(std::max(c, 1), 8);
                 c = std::min(c, (std::min(src.w, src.h) - 1) / 2);
 

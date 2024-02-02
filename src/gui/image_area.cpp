@@ -145,31 +145,13 @@ void ImageArea::updateScaledBmp()
     {
         free(bmp.scaled.data);
     }
-    //---------------------------------------------------------------
-    // Replace this with DIP algorithm!
-    //---------------------------------------------------------------
-    bmp.scaled.w = (int)(m_ratio * bmp.raw.w);
-    bmp.scaled.h = (int)(m_ratio * bmp.raw.h);
-
-    size_t size = sizeof(Pixel32) * bmp.scaled.w * bmp.scaled.h;
-    bmp.scaled.data = (Pixel32*)malloc(size);
     switch (scaleMode)
     {
-    case ScaleMode::Nearest: memset(bmp.scaled.data, 255, size); break;
-    case ScaleMode::Bilinear: memset(bmp.scaled.data, 127, size); break;
-    case ScaleMode::Cubic: memset(bmp.scaled.data, 0, size); break;
+    case ScaleMode::Nearest: bmp.scaled = nearest_interp(bmp.raw, m_ratio); break;
+    case ScaleMode::Bilinear: bmp.scaled = bilinear_interp(bmp.raw, m_ratio); break;
+    case ScaleMode::Cubic: bmp.scaled = cubic_interp(bmp.raw, m_ratio); break;
     default: break;
     }
-    auto w0 = min(bmp.raw.w, bmp.scaled.w);
-    auto h0 = min(bmp.raw.h, bmp.scaled.h);
-    for (int r = 0; r < h0; ++r)
-    {
-        for (int c = 0; c < w0; ++c)
-        {
-            bmp.scaled.data[r * bmp.scaled.w + c] = bmp.raw.data[r * bmp.raw.w + c];
-        }
-    }
-    //---------------------------------------------------------------
     updateImgView();
 }
 
